@@ -31,3 +31,14 @@ body {
     text-wrap: balance;
   }
 }
+
+/* Ocultar la barra de desplazamiento en navegadores Webkit */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Ocultar la barra de desplazamiento en Firefox */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE y Edge */
+  scrollbar-width: none;  /* Firefox */
+}

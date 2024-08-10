@@ -6,11 +6,11 @@ const Product: FC = () => {
     <div className="flex min-h-screen flex-col items-center justify-between p-4 md:p-24">
       <div className="flex flex-col md:flex-row">
         {/* Columna de Imágenes Pequeñas */}
-        <div className="flex flex-row md:flex-col space-x-4 md:space-x-0 md:space-y-4 overflow-x-auto md:overflow-y-auto">
+        <div className="flex flex-row md:flex-col space-x-4 md:space-x-0 md:space-y-4 overflow-x-auto md:overflow-y-auto scrollbar-hide">
           <Image src="https://trcmnbco.s3.amazonaws.com/WRCELCT4_1.jpg" alt="Vista 1" width={100} height={100} />
           <Image src="https://trcmnbco.s3.amazonaws.com/WRCELCT4_2.jpg" alt="Vista 2" width={100} height={100} />
-          <Image src="https://trcmnbco.s3.amazonaws.com/WRCELCT4_3.jpg" alt="Vista 2" width={100} height={100} />
-          <Image src="https://trcmnbco.s3.amazonaws.com/WRCELCT4_4.jpg" alt="Vista 2" width={100} height={100} />
+          <Image src="https://trcmnbco.s3.amazonaws.com/WRCELCT4_3.jpg" alt="Vista 3" width={100} height={100} />
+          <Image src="https://trcmnbco.s3.amazonaws.com/WRCELCT4_4.jpg" alt="Vista 4" width={100} height={100} />
         </div>
         {/* Imagen Principal */}
         <div className="flex-1 mt-4 md:mt-0">
