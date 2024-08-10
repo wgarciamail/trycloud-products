@@ -21,6 +21,13 @@ const Product: FC = () => {
           <h1 className="text-xl md:text-2xl font-bold">Vestido Preston</h1>
           <p className="text-lg">$475</p>
           <div className="mt-4">
+            <div className="my-4">
+                <label className="block text-sm font-medium">Color:</label>
+                <div className="flex space-x-2">
+                    <span className="border p-2">Egyptian Blue</span>
+                    {/* Añade más opciones de color según sea necesario */}
+                </div>
+            </div>
             <label className="block text-sm font-medium">Talla (US):</label>
             <div className="md:hidden">
               <select className="border p-2 w-full">
@@ -38,13 +45,7 @@ const Product: FC = () => {
               {/* Añade más tallas según sea necesario */}
             </div>
           </div>
-          <div className="mt-4">
-            <label className="block text-sm font-medium">Color:</label>
-            <div className="flex space-x-2">
-              <span className="border p-2">Egyptian Blue</span>
-              {/* Añade más opciones de color según sea necesario */}
-            </div>
-          </div>
+          
           <div className="mt-4 flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-4">
             <button className="bg-blue-500 text-white p-2">Añadir a mi cesta</button>
             <button className="bg-green-500 text-white p-2">Comprar ahora</button>
