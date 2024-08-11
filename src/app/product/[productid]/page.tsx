@@ -1,7 +1,11 @@
 import Image from 'next/image';
 import { FC } from 'react';
 
-const Product: FC = () => {
+const ProductPage = () => {
+  
+}
+
+const Product: FC<{params: {productid: string}}> = ({params}) => {
   return (
     <div className="flex min-h-screen flex-col items-center justify-between p-4 md:p-24">
       <div className="flex flex-col md:flex-row">
@@ -19,6 +23,7 @@ const Product: FC = () => {
         {/* Información del Producto */}
         <div className="flex-1 p-4">
           <h1 className="text-xl md:text-2xl font-bold">Vestido Preston</h1>
+          <p>TNP:{params.productid}</p>
           <p className="text-lg">$475</p>
           <div className="mt-4">
             <div className="my-4">
@@ -46,9 +51,9 @@ const Product: FC = () => {
             </div>
           </div>
           
-          <div className="mt-4 flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-4">
-            <button className="bg-blue-500 text-white p-2">Añadir a mi cesta</button>
-            <button className="bg-green-500 text-white p-2">Comprar ahora</button>
+          <div className="mt-4 flex flex-col lg:flex-row space-y-2 lg:space-y-0 lg:space-x-4">
+            <button className="bg-blue-500 text-white p-2">AÑADIR AL CARRITO</button>
+            <button className="bg-green-500 text-white p-2">COMPRAR AHORA</button>
           </div>
           <div className="mt-4">
             <a href="#" className="text-blue-500">+ Agregar a Mis listas</a>
