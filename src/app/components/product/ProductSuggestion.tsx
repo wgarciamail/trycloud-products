@@ -24,14 +24,14 @@ const ProductSuggestion = ({suggestion} : {suggestion: Array<productSuggestion>}
             <p className="text-gray-500 text-xxs">
               Provider: {product.providerName}
             </p>
-            <p className="text-gray-500 text-xxs hidden lg:block">{product.category}</p>
-            <p className="text-gray-500 text-xxs">score:{product.score}</p>
-            <div className="grid grid-cols-6 gap-2 text-xxs mt-2">
+            <p className="text-gray-500 text-xxs break-words">{product.category}</p>
+            <p className="text-gray-500 text-xxs overflow-hidden text-ellipsis">score:{product.score}</p>
+            <div className="flex flex-wrap text-xxs m-2">
               {product.sizeName &&
                 product.sizeName.map((size) => (
                   <button
                     key={size}
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold  py-2  rounded"
+                    className="rounded bg-blue-500 hover:bg-blue-700 text-white font-bold p-2 m-1 w-10"
                   >
                     {size}
                   </button>

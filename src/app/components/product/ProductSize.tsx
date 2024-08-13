@@ -40,9 +40,9 @@ const ProductSize = ({ variationsColor, setVariation, setSuggestion }: { variati
           ))}
         </select>
       </div>
-      <div className="hidden md:flex flex-wrap space-x-2 space-y-2">
+      <div className="hidden md:flex flex-wrap">
         {variationsColor[0].variationsSize.map((variation: any) => (
-            <button key={variation.TN} className="border rounded-sm p-2 w-10 h-10" onClick={() => selectSize(variation.TN, setVariation, setSuggestion)}>{variation.sizeName}</button>
+            <button key={variation.TN} className="border rounded p-2 w-10 h-10 m-1" onClick={() => selectSize(variation.TN, setVariation, setSuggestion)}>{variation.sizeName}</button>
         ))}
       </div>
     </>
