@@ -3,8 +3,8 @@ import { AuthService } from './authService';
 
 // Create an instance of axios
 const api: AxiosInstance = axios.create({
-    baseURL: 'http://trycloud-api.traetelo.me:8091',
-    //baseURL: 'https://api.trycloud.io',
+    //baseURL: 'http://trycloud-api.traetelo.me:8091',
+    baseURL: 'https://api.trycloud.io',
     withCredentials: true,
     headers: {
         "Content-Type": "application/json",
