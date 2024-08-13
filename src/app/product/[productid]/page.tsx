@@ -37,7 +37,7 @@ const Product: FC<{params: {productid: string}}> = ({params}) => {
           }
         );
       }
-  }, [])
+  }, [params.productid])
 
   if (!productParent) {
     return <div>Error: no se encontro el producto con el identificador {params.productid}</div>;
