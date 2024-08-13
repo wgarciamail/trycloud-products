@@ -6,7 +6,7 @@ import React from "react";
 
 const ProductStores = ({store}: { store: any}) => {
   return (
-    <>
+    <div>
         <h2 className="text-lg font-bold">Stores</h2>
         <ul className="list-disc pl-5">
             {/*variationsColor[0].variationsSize.map((size: any) => (
@@ -23,7 +23,7 @@ const ProductStores = ({store}: { store: any}) => {
             ))}
            
         </ul>
-    </>
+    </div>
   );
 };
 

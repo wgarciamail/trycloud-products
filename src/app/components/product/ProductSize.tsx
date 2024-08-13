@@ -16,7 +16,7 @@ const selectSize = (tn: string, setVariation: any, setSuggestion: any) => {
   })
   makeRequest(
     HttpMethods.GET,
-    `/products/getRelatedEmbedding?TN=${tn}`  
+    `/products/getRelatedEmbedding?TN=${tn}`
   ).then((responseSugestion: ApiResponse) => {
     if (responseSugestion.error && responseSugestion.error.message &&  0 < responseSugestion.error.message.length) {
       console.log(responseSugestion.error.message ?? 'Error desconocido al obtener el Producto');

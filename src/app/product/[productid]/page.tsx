@@ -70,13 +70,13 @@ const Product: FC<{params: {productid: string}}> = ({params}) => {
             <a href="#" className="text-blue-500">+ Agregar a Mis listas</a>
           </div> */}
           <div className="mt-4">
-            <ProductDescription productParent={product?.product}/>
-          </div>
-          <div className="mt-4">
             <p>Merchant: {productParent.merchant}</p>
           </div>
-          <div className="mt-4">
+          <div className="mt-4 flex flex-col md:flex-row  md:space-x-4">
+            <ProductDescription productParent={product?.product}/>
             <ProductStores store={product?.stores} />
+          </div>
+          <div className="mt-4">
           </div>
         </div>
       </div>

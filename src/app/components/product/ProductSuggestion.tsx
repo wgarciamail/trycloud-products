@@ -24,7 +24,7 @@ const ProductSuggestion = ({suggestion} : {suggestion: Array<productSuggestion>}
             <p className="text-gray-500 text-xxs">
               Provider: {product.providerName}
             </p>
-            <p className="text-gray-500 text-xxs">{product.category}</p>
+            <p className="text-gray-500 text-xxs hidden lg:block">{product.category}</p>
             <p className="text-gray-500 text-xxs">score:{product.score}</p>
             <div className="grid grid-cols-6 gap-2 text-xxs mt-2">
               {product.sizeName &&
