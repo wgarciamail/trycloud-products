@@ -26,12 +26,12 @@ const ProductSuggestion = ({suggestion} : {suggestion: Array<productSuggestion>}
             </p>
             <p className="text-gray-500 text-xxs break-words">{product.category}</p>
             <p className="text-gray-500 text-xxs overflow-hidden text-ellipsis">score:{product.score}</p>
-            <div className="flex flex-wrap text-xxs m-2">
+            <div className="flex flex-wrap mt-1 m-auto">
               {product.sizeName &&
                 product.sizeName.map((size) => (
                   <button
                     key={size}
-                    className="rounded bg-blue-500 hover:bg-blue-700 text-white font-bold p-2 m-1 w-10"
+                    className="rounded bg-blue-500 hover:bg-blue-700 text-white text-xs font-bold p-2 m-1 w-10"
                   >
                     {size}
                   </button>
