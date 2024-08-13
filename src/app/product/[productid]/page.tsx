@@ -1,82 +1,86 @@
-import Image from 'next/image';
-import { FC } from 'react';
+"use client";
 
-const ProductPage = () => {
-  
-}
+import Image from 'next/image';
+import { useEffect, useState } from 'react';
+import { FC } from 'react';
+import { makeRequest, HttpMethods, ApiResponse } from '@/services/apiServices';
+import ProductImages from '@/app/components/product/ProductImages';
+import ProductColors  from '@/app/components/product/ProductColors';
+import ProductSize  from '@/app/components/product/ProductSize';
+import ProductStores from '@/app/components/product/ProductStores';
+import ProductDescription from '@/app/components/product/ProductDescription';
+import ProductSuggestion from '@/app/components/product/ProductSuggestion';
+import { productParent, productSuggestion, productTN } from '@/models/product';
+import { AuthService } from '@/services/authService';
 
 const Product: FC<{params: {productid: string}}> = ({params}) => {
+  const [product, setVariation] = useState<productTN | null>(null);
+  const [productParent, setProductParent] = useState<productParent | null>(null);
+  const [suggestion, setSuggestion] = useState<Array<productSuggestion> | []>([]);
+
+  useEffect(() => {
+      setProductParent(null);
+      if (AuthService.validateSession()) {
+        makeRequest(
+            HttpMethods.GET,
+            `/products/getProductsTNP?tnp=${params.productid}`
+        ).then(
+          (response: ApiResponse) => {
+            if (response.error && response.error.message &&  0 < response.error.message.length) {
+              console.log(response.error.message ?? 'Error desconocido al obtener el Producto');
+            } else {
+              setProductParent(response.data);
+            }
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+      }
+  }, [])
+
+  if (!productParent) {
+    return <div>Error: no se encontro el producto con el identificador {params.productid}</div>;
+  }
   return (
     <div className="flex min-h-screen flex-col items-center justify-between p-4 md:p-24">
       <div className="flex flex-col md:flex-row">
         {/* Columna de Imágenes Pequeñas */}
         <div className="flex flex-row md:flex-col space-x-4 md:space-x-0 md:space-y-4 overflow-x-auto md:overflow-y-auto scrollbar-hide">
-          <Image src="https://trcmnbco.s3.amazonaws.com/WRCELCT4_1.jpg" alt="Vista 1" width={100} height={100} />
-          <Image src="https://trcmnbco.s3.amazonaws.com/WRCELCT4_2.jpg" alt="Vista 2" width={100} height={100} />
-          <Image src="https://trcmnbco.s3.amazonaws.com/WRCELCT4_3.jpg" alt="Vista 3" width={100} height={100} />
-          <Image src="https://trcmnbco.s3.amazonaws.com/WRCELCT4_4.jpg" alt="Vista 4" width={100} height={100} />
+          <ProductImages variationsColor={productParent.variationsColor} />
         </div>
         {/* Imagen Principal */}
         <div className="flex-1 mt-4 md:mt-0">
-          <Image src="https://trcmnbco.s3.amazonaws.com/WRCELCT4_1.jpg" alt="Producto" width={500} height={600} className="w-full h-auto" />
+          <Image src={productParent.image} alt="Producto" width={500} height={600} className="w-full h-auto" />
         </div>
         {/* Información del Producto */}
         <div className="flex-1 p-4">
-          <h1 className="text-xl md:text-2xl font-bold">Vestido Preston</h1>
-          <p>TNP:{params.productid}</p>
-          <p className="text-lg">$475</p>
+          <h1 className="text-xl md:text-2xl font-bold">{productParent.name}</h1>
+          <p>TNP:{productParent.TNP}</p>
+          <p className="text-lg">${productParent.price}</p>
           <div className="mt-4">
-            <div className="my-4">
-                <label className="block text-sm font-medium">Color:</label>
-                <div className="flex space-x-2">
-                    <span className="border p-2">Egyptian Blue</span>
-                    {/* Añade más opciones de color según sea necesario */}
-                </div>
-            </div>
-            <label className="block text-sm font-medium">Talla (US):</label>
-            <div className="md:hidden">
-              <select className="border p-2 w-full">
-                <option>Selecciona la talla...</option>
-                <option value="0">0</option>
-                <option value="2">2</option>
-                <option value="4">4</option>
-                {/* Añade más tallas según sea necesario */}
-              </select>
-            </div>
-            <div className="hidden md:flex space-x-2">
-              <button className="border p-2">0</button>
-              <button className="border p-2">2</button>
-              <button className="border p-2">4</button>
-              {/* Añade más tallas según sea necesario */}
-            </div>
+            <ProductColors variationsColor={productParent.variationsColor}/>
+            <ProductSize variationsColor={productParent.variationsColor} setVariation={setVariation} setSuggestion={setSuggestion} />
           </div>
-          
           <div className="mt-4 flex flex-col lg:flex-row space-y-2 lg:space-y-0 lg:space-x-4">
             <button className="bg-blue-500 text-white p-2">AÑADIR AL CARRITO</button>
             <button className="bg-green-500 text-white p-2">COMPRAR AHORA</button>
           </div>
-          <div className="mt-4">
+         {/*  <div className="mt-4">
             <a href="#" className="text-blue-500">+ Agregar a Mis listas</a>
+          </div> */}
+          <div className="mt-4">
+            <ProductDescription productParent={product?.product}/>
           </div>
           <div className="mt-4">
-            <h2 className="text-lg font-bold">Descripción</h2>
-            <ul className="list-disc pl-5">
-              <li>Peaux Fax acetato, 25% poliester</li>
-              <li>Forro: 97% poliester, 2% spandex</li>
-              <li>Fabricado en China</li>
-              <li>Se recomienda lavar en tintorería</li>
-              <li>Totalmente forrado</li>
-              <li>Claro posterior oculto</li>
-              <li>Estilo con un solo hombro</li>
-              <li>Tejido satinado grueso con abertura en la costura lateral</li>
-            </ul>
+            <p>Merchant: {productParent.merchant}</p>
           </div>
           <div className="mt-4">
-            <p>Nº articulo Revolve SLEE-WDI74</p>
-            <p>Nº de esto de fabricante W22002</p>
+            <ProductStores store={product?.stores} />
           </div>
         </div>
       </div>
+      <ProductSuggestion suggestion={suggestion} />
     </div>
   );
 };

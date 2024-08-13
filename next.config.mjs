@@ -8,6 +8,12 @@ const nextConfig = {
           port: '',
           pathname: '*/**',
         },
+        {
+          protocol: 'https',
+          hostname: 'pilatos21.vteximg.com.br',
+          port: '',
+          pathname: '*/**',
+        }
       ],
     },
   };
