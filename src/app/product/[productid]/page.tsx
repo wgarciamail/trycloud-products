@@ -3,7 +3,8 @@
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { FC } from 'react';
-import { makeRequest, HttpMethods, ApiResponse } from '@/services/apiServices';
+//import { makeRequest, HttpMethods, ApiResponse } from '@/services/apiServices';
+import { fetchProduct } from '@/app/lib/data';
 import ProductImages from '@/app/components/product/ProductImages';
 import ProductColors  from '@/app/components/product/ProductColors';
 import ProductSize  from '@/app/components/product/ProductSize';
@@ -21,21 +22,16 @@ const Product: FC<{params: {productid: string}}> = ({params}) => {
   useEffect(() => {
       setProductParent(null);
       if (AuthService.validateSession()) {
-        makeRequest(
-            HttpMethods.GET,
-            `/products/getProductsTNP?tnp=${params.productid}`
-        ).then(
-          (response: ApiResponse) => {
-            if (response.error && response.error.message &&  0 < response.error.message.length) {
-              console.log(response.error.message ?? 'Error desconocido al obtener el Producto');
-            } else {
-              setProductParent(response.data);
+        fetchProduct(params.productid).then(
+          (response: productParent | null) => {
+            if (response) {
+              setProductParent(response);
             }
           },
           (error) => {
             console.log(error);
           }
-        );
+        )
       }
   }, [params.productid])
 
