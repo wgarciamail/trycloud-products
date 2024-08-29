@@ -14,3 +14,17 @@ export const fetchProduct = async (productid: string): Promise<productParent | n
     return response.data;
   }
 }
+
+export const fetchCustomerData = async (): Promise<any> => {
+  const response: ApiResponse | null = await makeRequest(
+       HttpMethods.GET,
+            `/customer/getCustomerData`
+  );
+  console.log(response);
+  if (response.error && response.error.message &&  0 < response.error.message.length) {
+    console.log(response.error.message ?? 'Error desconocido al obtener el Producto');
+    return null;
+  } else {
+    return response.data;
+  }
+}

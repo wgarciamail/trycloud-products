@@ -4,20 +4,22 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { FC } from 'react';
 //import { makeRequest, HttpMethods, ApiResponse } from '@/services/apiServices';
-import { fetchProduct } from '@/app/lib/data';
-import ProductImages from '@/app/components/product/ProductImages';
-import ProductColors  from '@/app/components/product/ProductColors';
-import ProductSize  from '@/app/components/product/ProductSize';
-import ProductStores from '@/app/components/product/ProductStores';
-import ProductDescription from '@/app/components/product/ProductDescription';
-import ProductSuggestion from '@/app/components/product/ProductSuggestion';
+import { fetchCustomerData, fetchProduct } from '@/app/lib/data';
+import ProductImages from '@/app/UI/product/ProductImages';
+import ProductColors  from '@/app/UI/product/ProductColors';
+import ProductSize  from '@/app/UI/product/ProductSize';
+import ProductStores from '@/app/UI/product/ProductStores';
+import ProductDescription from '@/app/UI/product/ProductDescription';
+import ProductSuggestion from '@/app/UI/product/ProductSuggestion';
 import { productParent, productSuggestion, productTN } from '@/models/product';
 import { AuthService } from '@/services/authService';
+import CustomerStores from '@/app/UI/product/CustomerStores';
 
 const Product: FC<{params: {productid: string}}> = ({params}) => {
   const [product, setVariation] = useState<productTN | null>(null);
   const [productParent, setProductParent] = useState<productParent | null>(null);
   const [suggestion, setSuggestion] = useState<Array<productSuggestion> | []>([]);
+  const [customerData, setCustomerData] = useState<any>(null);
 
   useEffect(() => {
       setProductParent(null);
@@ -26,6 +28,17 @@ const Product: FC<{params: {productid: string}}> = ({params}) => {
           (response: productParent | null) => {
             if (response) {
               setProductParent(response);
+            }
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+        // get data customer...
+        fetchCustomerData().then(
+          (response: any) => {
+            if (response) {
+              setCustomerData(response);
             }
           },
           (error) => {
@@ -73,6 +86,7 @@ const Product: FC<{params: {productid: string}}> = ({params}) => {
             <ProductStores store={product?.stores} />
           </div>
           <div className="mt-4">
+            <CustomerStores store={customerData?.stores} />
           </div>
         </div>
       </div>
