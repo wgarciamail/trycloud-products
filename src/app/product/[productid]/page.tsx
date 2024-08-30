@@ -18,7 +18,6 @@ const Product: FC<{params: {productid: string}}> = ({params}) => {
   const [product, setVariation] = useState<productTN | null>(null);
   const [productParent, setProductParent] = useState<productParent | null>(null);
   const [suggestion, setSuggestion] = useState<Array<productSuggestion> | []>([]);
-  const [customerData, setCustomerData] = useState<any>(null);
 
   useEffect(() => {
       setProductParent(null);
