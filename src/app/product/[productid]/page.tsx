@@ -13,7 +13,6 @@ import ProductDescription from '@/app/UI/product/ProductDescription';
 import ProductSuggestion from '@/app/UI/product/ProductSuggestion';
 import { productParent, productSuggestion, productTN } from '@/models/product';
 import { AuthService } from '@/services/authService';
-import CustomerStores from '@/app/UI/product/CustomerStores';
 
 const Product: FC<{params: {productid: string}}> = ({params}) => {
   const [product, setVariation] = useState<productTN | null>(null);
@@ -34,17 +33,6 @@ const Product: FC<{params: {productid: string}}> = ({params}) => {
             console.log(error);
           }
         );
-        // get data customer...
-        fetchCustomerData().then(
-          (response: any) => {
-            if (response) {
-              setCustomerData(response);
-            }
-          },
-          (error) => {
-            console.log(error);
-          }
-        )
       }
   }, [params.productid])
 
@@ -86,7 +74,6 @@ const Product: FC<{params: {productid: string}}> = ({params}) => {
             <ProductStores store={product?.stores} />
           </div>
           <div className="mt-4">
-            <CustomerStores store={customerData?.stores} />
           </div>
         </div>
       </div>
