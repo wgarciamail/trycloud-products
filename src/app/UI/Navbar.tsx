@@ -42,6 +42,7 @@ const Navbar: React.FC = () => {
         }
       } else {
         setIsStoreOpen(true);
+        setIsCartOpen(false);
         setMessageStore(null);
       }
     }
@@ -150,7 +151,7 @@ const Navbar: React.FC = () => {
                 <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Distancia</th>
               </tr>
             </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
+            <tbody className="bg-white divide-y divide-gray-200 text-xs">
               {customerData?.stores.map((store: any) => (
                 <tr key={store.store_code}>
                   <td className="px-6 py-4 whitespace-nowrap">{store.store_code}</td>
