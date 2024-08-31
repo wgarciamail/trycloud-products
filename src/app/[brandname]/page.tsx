@@ -3,29 +3,19 @@
 import { useState } from "react";
 import React, { useEffect } from "react";
 import Image from "next/image";
-import { makeRequest, HttpMethods, ApiResponse } from "@/services/apiServices";
 import { AuthService } from "@/services/authService";
+import { fetchProductsByBrand } from "@/app/lib/data";
 
 const ProductsBrand = ({ params }: { params: { brandname: string } }) => {
   const [products, setProducts] = useState<Array<any> | null>(null);
 
   useEffect(() => {
     if (AuthService.validateSession()) {
-        makeRequest(
-        HttpMethods.GET,
-        `/products/productsbrand?brandname=${params.brandname}`
-        ).then(
-        (response: ApiResponse) => {
-            if ( response.error && response.error.message && 0 < response.error.message.length ) {
-            console.log(response.error.message ?? "Error desconocido al obtener el Producto" );
-            } else {
-                setProducts(response.data);
-            }
-        },
-        (error) => {
-            console.log(error);
-        }
-        );
+       const getProducts = async () => {
+         const response = await fetchProductsByBrand(params.brandname);
+         setProducts(response);
+       }
+       getProducts();
     }
   }, [params.brandname]);
 

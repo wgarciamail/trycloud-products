@@ -1,29 +1,14 @@
 "use client";
 
 import React from "react";
-import { makeRequest, HttpMethods, ApiResponse } from "@/services/apiServices";
+import { fetchRelatedEmbedding, fetchStoreByTN } from "@/app/lib/data";
 
-const selectSize = (tn: string, setVariation: any, setSuggestion: any) => {
-  makeRequest(
-    HttpMethods.GET,
-    `/products/getStoreByTN?tn=${tn}`
-  ).then((responseTN: ApiResponse) => {
-    if (responseTN.error && responseTN.error.message &&  0 < responseTN.error.message.length) {
-      console.log(responseTN.error.message ?? 'Error desconocido al obtener el Producto');
-    } else {
-      setVariation(responseTN.data)
-    }
-  })
-  makeRequest(
-    HttpMethods.GET,
-    `/products/getRelatedEmbedding?TN=${tn}&sizeName=5`
-  ).then((responseSugestion: ApiResponse) => {
-    if (responseSugestion.error && responseSugestion.error.message &&  0 < responseSugestion.error.message.length) {
-      console.log(responseSugestion.error.message ?? 'Error desconocido al obtener el Producto');
-    } else {
-      setSuggestion(responseSugestion.data)
-    }
-  })
+const selectSize = async (tn: string, sizeName: string, setVariation: any, setSuggestion: any) => {
+  const responseVariation = await fetchStoreByTN(tn);
+  setVariation(responseVariation);
+  const responseSugestion = await fetchRelatedEmbedding(tn, sizeName);
+  setSuggestion(responseSugestion);
+
 }
 
 const ProductSize = ({ variationsColor, setVariation, setSuggestion }: { variationsColor: any, setVariation: any, setSuggestion: any }) => {
@@ -42,7 +27,7 @@ const ProductSize = ({ variationsColor, setVariation, setSuggestion }: { variati
       </div>
       <div className="hidden md:flex flex-wrap">
         {variationsColor[0].variationsSize.map((variation: any) => (
-            <button key={variation.TN} className="border rounded p-2 w-10 h-10 m-1" onClick={() => selectSize(variation.TN, setVariation, setSuggestion)}>{variation.sizeName}</button>
+            <button key={variation.TN} className="border rounded p-2 w-10 h-10 m-1" onClick={() => selectSize(variation.TN, variation.sizeName, setVariation, setSuggestion)}>{variation.sizeName}</button>
         ))}
       </div>
     </>

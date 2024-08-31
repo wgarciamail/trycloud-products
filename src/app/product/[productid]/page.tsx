@@ -3,8 +3,7 @@
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { FC } from 'react';
-//import { makeRequest, HttpMethods, ApiResponse } from '@/services/apiServices';
-import { fetchCustomerData, fetchProduct } from '@/app/lib/data';
+import { fetchProduct } from '@/app/lib/data';
 import ProductImages from '@/app/UI/product/ProductImages';
 import ProductColors  from '@/app/UI/product/ProductColors';
 import ProductSize  from '@/app/UI/product/ProductSize';
