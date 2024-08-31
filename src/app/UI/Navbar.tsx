@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import { fetchCustomerData } from '../lib/data';
+import CustomerStores from './product/CustomerStores';
 
 interface CartItem {
   name: string;
@@ -139,28 +140,11 @@ const Navbar: React.FC = () => {
         </div>
       )}
       {isStoreAvailableOpen && (
-        <div className="absolute right-0 mt-2 w-100 bg-white border border-gray-200 shadow-lg p-4">
+        <div className="absolute right-0 mt-2 w-auto bg-white border border-gray-200 shadow-lg p-4">
           <h2 className="text-lg font-bold mb-2">Tiendas disponible</h2>
           <div className="mb-4">
             {messageStore && <div>{messageStore}</div>}
-          <table className="min-w-full divide-y divide-gray-200 mt-4">
-            <thead>
-              <tr>
-                <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Código de Tienda</th>
-                <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nombre</th>
-                <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Distancia</th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200 text-xs">
-              {customerData?.stores.map((store: any) => (
-                <tr key={store.store_code}>
-                  <td className="px-6 py-4 whitespace-nowrap">{store.store_code}</td>
-                  <td className="px-6 py-4 whitespace-nowrap">{store.name}</td>
-                  <td className="px-6 py-4 whitespace-nowrap">{store.distance.toFixed(3)} km</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+            <CustomerStores stores={customerData?.stores} />
           </div>
         </div>
       )}
