@@ -1,4 +1,4 @@
-import { productParent, productTN, variationsSize } from '@/models/product'
+import { productParent, productTN, variationsSize } from '@/models/definitions'
 import React from 'react'
 
 const ProductDescription = ({productParent: productParent}: { productParent: productParent | null | undefined}) => {

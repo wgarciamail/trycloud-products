@@ -1,5 +1,5 @@
 import { makeRequest, HttpMethods, ApiResponse } from '@/app/lib/apiServices'
-import { productParent } from '@/models/product';
+import { productParent } from '@/models/definitions';
 
 
 export const fetchProduct = async (productid: string): Promise<productParent | null> => {
