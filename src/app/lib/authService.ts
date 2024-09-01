@@ -1,4 +1,4 @@
-import { AuthModel } from "../../models/authModel";
+import { AuthModel } from "./definitions";
 
 export class AuthService {
     public static authModel: AuthModel = { token: "", refreshToken: "", isAnonimo: true };
