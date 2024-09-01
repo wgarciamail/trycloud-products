@@ -27,7 +27,7 @@ export const CartNavbar = ({
         {title} ({cartItems.length})
       </h2>
       {(cartItems as CartItem[]).map((item, index) => (
-        <div className="flex flex-row space-x-2 mb-3">
+        <div key={index} className="flex flex-row space-x-2 mb-3">
           <Image
             src={item.image}
             width={100}
