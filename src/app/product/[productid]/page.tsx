@@ -11,7 +11,7 @@ import ProductStores from '@/app/UI/product/ProductStores';
 import ProductDescription from '@/app/UI/product/ProductDescription';
 import ProductSuggestion from '@/app/UI/product/ProductSuggestion';
 import { productParent, productSuggestion, productTN } from '@/models/product';
-import { AuthService } from '@/services/authService';
+import { AuthService } from '@/app/lib/authService';
 
 const Product: FC<{params: {productid: string}}> = ({params}) => {
   const [product, setVariation] = useState<productTN | null>(null);

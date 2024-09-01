@@ -3,7 +3,7 @@
 import { useState } from "react";
 import React, { useEffect } from "react";
 import Image from "next/image";
-import { AuthService } from "@/services/authService";
+import { AuthService } from "@/app/lib/authService";
 import { fetchProductsByBrand } from "@/app/lib/data";
 
 const ProductsBrand = ({ params }: { params: { brandname: string } }) => {

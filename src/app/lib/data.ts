@@ -1,4 +1,4 @@
-import { makeRequest, HttpMethods, ApiResponse } from '@/services/apiServices'
+import { makeRequest, HttpMethods, ApiResponse } from '@/app/lib/apiServices'
 import { productParent } from '@/models/product';
 
 
