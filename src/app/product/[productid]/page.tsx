@@ -10,7 +10,7 @@ import ProductSize  from '@/app/UI/product/ProductSize';
 import ProductStores from '@/app/UI/product/ProductStores';
 import ProductDescription from '@/app/UI/product/ProductDescription';
 import ProductSuggestion from '@/app/UI/product/ProductSuggestion';
-import { productParent, productSuggestion, productTN } from '@/models/definitions';
+import { productParent, productSuggestion, productTN } from '@/app/lib/definitions';
 import { AuthService } from '@/app/lib/authService';
 
 const Product: FC<{params: {productid: string}}> = ({params}) => {

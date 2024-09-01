@@ -1,4 +1,4 @@
-import { productParent, productSuggestion } from "@/models/definitions";
+import { productParent, productSuggestion } from "@/app/lib/definitions";
 import React from "react";
 import Image from "next/image";
 
