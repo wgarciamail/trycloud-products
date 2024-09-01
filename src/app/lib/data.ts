@@ -66,3 +66,16 @@ export const fetchProductsByBrand = async (brandName: string): Promise<Array<any
     return response.data;
   }
 }
+
+export const fetchCart = async (): Promise<any> => {
+  const response: ApiResponse | null = await makeRequest(
+       HttpMethods.GET,
+            `/ShoppingCart/getCartWithOutHost`
+  );
+  if (response.error && response.error.message &&  0 < response.error.message.length) {
+    console.log(response.error.message ?? 'Error desconocido al obtener el Carrito');
+    return null;
+  } else {
+    return response.data;
+  }
+}

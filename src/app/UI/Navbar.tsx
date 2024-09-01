@@ -1,16 +1,9 @@
 "use client";
-import React, { useState } from 'react';
-import '@fortawesome/fontawesome-free/css/all.min.css';
-import { fetchCustomerData } from '../lib/data';
-import CustomerStores from './product/CustomerStores';
-
-interface CartItem {
-  name: string;
-  size: string;
-  color: string;
-  quantity: number;
-  price: number;
-}
+import React, { useState } from "react";
+import "@fortawesome/fontawesome-free/css/all.min.css";
+import { fetchCustomerData, fetchCart } from "../lib/data";
+import CustomerStores from "./product/CustomerStores";
+import { CartItem, CartNavbar } from "./cart/CartNavbar";
 
 const Navbar: React.FC = () => {
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -18,28 +11,41 @@ const Navbar: React.FC = () => {
   const [isStoreAvailableOpen, setIsStoreOpen] = useState(false);
   const [customerData, setCustomerData] = useState<any>(null);
   const [messageStore, setMessageStore] = useState<string | null>(null);
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [cartItemsDeleted, setCartItemsDeleted] = useState<CartItem[]>([]);
+  const [messageCart, setMessageCart] = useState<string | null>(null);
+  const [availableStores, setAvailableStores] = useState<any[]>([]);
 
-  const toggleCart = () => {
+  const toggleCart = async () => {
     setIsCartOpen(!isCartOpen);
     setIsStoreOpen(false);
+    if (!isCartOpen) {
+      setMessageCart("Buscando el carrito...");
+      setCartItems([]);
+      setCartItemsDeleted([]);
+      const cart = await fetchCart();
+      console.dir(cart.availableStore);
+      setCartItems(cart.products);
+      setCartItemsDeleted(cart.deleted);
+      setAvailableStores(cart.availableStore);
+    }
+    setMessageCart(null);
   };
-
 
   const showAvailableStores = async () => {
     if (isStoreAvailableOpen) {
       setIsStoreOpen(false);
     } else {
       if (!customerData) {
-        setMessageStore('Buscando las tiendas disponibles...');
+        setMessageStore("Buscando las tiendas disponibles...");
         setIsStoreOpen(true);
         setIsCartOpen(false);
         const data = await fetchCustomerData();
         if (data) {
           setCustomerData(data);
           setMessageStore(null);
-
         } else {
-          setMessageStore('No se encontraron tiendas disponibles');
+          setMessageStore("No se encontraron tiendas disponibles");
         }
       } else {
         setIsStoreOpen(true);
@@ -49,20 +55,7 @@ const Navbar: React.FC = () => {
     }
   };
 
-  
-  const cartItems: CartItem[] = [
-    {
-      name: 'CHAQUETA GLOBO DALTON AGOLDE',
-      size: 'S',
-      color: 'Azul',
-      quantity: 2,
-      price: 298.00,
-    },
-  ];
-
   const totalAmount = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
-
-
 
   return (
     <nav className="bg-white border-b border-gray-200">
@@ -88,14 +81,25 @@ const Navbar: React.FC = () => {
             className="border rounded px-2 py-1"
           />
           <i className="fas fa-search cursor-pointer"></i>
-          <i className="fas fa-location-dot cursor-pointer" onClick={showAvailableStores}></i>
+          <i
+            className="fas fa-location-dot cursor-pointer"
+            onClick={showAvailableStores}
+          ></i>
           <div className="relative cursor-pointer" onClick={toggleCart}>
-            <i className="fas fa-shopping-bag " ></i>
-            <span className="absolute top-0 right-0 bg-pink-500 text-white rounded-full text-xs px-1">2</span>
+            <i className="fas fa-shopping-bag "></i>
+            {cartItems.length > 0 && (
+                <span className="absolute top-0 right-0 bg-pink-500 text-white rounded-full text-xs px-1">
+                  {cartItems.length}
+                </span>
+            )}
           </div>
           <div className="relative">
             <i className="fas fa-bell cursor-pointer"></i>
-            <span className="absolute top-0 right-0 bg-pink-500 text-white rounded-full text-xs px-1">2</span>
+            {cartItemsDeleted.length > 0 && (
+              <span className="absolute top-0 right-0 bg-pink-500 text-white rounded-full text-xs px-1">
+                {cartItemsDeleted.length}
+              </span>
+            )}
           </div>
         </div>
       </div>
@@ -118,25 +122,29 @@ const Navbar: React.FC = () => {
             <i className="fas fa-shopping-bag cursor-pointer"></i>
             <div className="relative">
               <i className="fas fa-bell cursor-pointer"></i>
-              <span className="absolute top-0 right-0 bg-pink-500 text-white rounded-full text-xs px-1">2</span>
+              {cartItems.length > 0 && (
+                <span className="absolute top-0 right-0 bg-pink-500 text-white rounded-full text-xs px-1">
+                  {cartItems.length}
+                </span>
+              )}
             </div>
           </div>
         </ul>
       )}
       {isCartOpen && (
-        <div className="absolute right-0 mt-2 w-64 bg-white border border-gray-200 shadow-lg p-4">
-          <h2 className="text-lg font-bold mb-2">Mi Cesta ({cartItems.length})</h2>
-          {cartItems.map((item, index) => (
-            <div key={index} className="mb-4">
-              <div className="font-bold">{item.name}</div>
-              <div>Talla: {item.size}</div>
-              <div>Color: {item.color}</div>
-              <div>Cantidad: {item.quantity}</div>
-              <div>${item.price.toFixed(2)}</div>
-            </div>
-          ))}
-          <div className="font-bold">Total: ${totalAmount.toFixed(2)}</div>
-          <button className="w-full bg-black text-white py-2 mt-2">COMENZAR EL PROCESO DE PAGO</button>
+        <div className="absolute right-0 mt-2 w-auto bg-white border border-gray-200 shadow-lg p-4">
+          {messageCart ? <div>{messageCart}</div> : (
+            <>
+              <div className="mb-4 border rounded-md p-4">
+                <div className="text-lg font-bold mb-2">Tiendas Seleccionadas</div>
+                {(availableStores as any[]).map((store, index) => (
+                  <div key={index}>{store}</div>
+                ))}
+              </div>
+              <CartNavbar cartItems={cartItems} title="Carrito" totalAmount={totalAmount} />
+               <CartNavbar cartItems={cartItemsDeleted} title="Eliminados" totalAmount={0}/>
+            </>
+          )}
         </div>
       )}
       {isStoreAvailableOpen && (
@@ -149,7 +157,7 @@ const Navbar: React.FC = () => {
         </div>
       )}
     </nav>
-  );
-};
+  )
+}
 
 export default Navbar;

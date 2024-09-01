@@ -2,7 +2,6 @@ import { productParent, productTN, variationsSize } from '@/models/product'
 import React from 'react'
 
 const ProductDescription = ({productParent: productParent}: { productParent: productParent | null | undefined}) => {
-  {console.log(productParent)}
   if (productParent == null) return <h1>No se encontro el Producto</h1>
   return (
     <div>
@@ -17,7 +16,6 @@ const ProductDescription = ({productParent: productParent}: { productParent: pro
         <li>statusGeneric: {productParent.variationsColor?.[0]?.variationsSize?.[0]?.statusGeneric}</li>
         </ul>
     </div>
-    
   )
 }
 
