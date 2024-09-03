@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import { fetchCustomerData, fetchCart } from "../lib/data";
-import CustomerStores from "./product/CustomerStores";
+import CustomerStores from "./product_site/CustomerStores";
 import { CartItem, CartNavbar } from "./cart/CartNavbar";
 
 const Navbar: React.FC = () => {

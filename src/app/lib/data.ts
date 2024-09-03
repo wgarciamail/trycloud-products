@@ -50,7 +50,7 @@ export const fetchStoreByTN = async (tn: string): Promise<any> => {
     console.log(response.error.message ?? 'Error desconocido al obtener el Producto');
     return null;
   } else {
-    return response.data;
+    return response.data.stores;
   }
 }
 

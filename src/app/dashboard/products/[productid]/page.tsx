@@ -1,37 +1,15 @@
-import React from 'react';
-import Image from 'next/image';
+import {FC} from 'react';
+import { usePathname, useRouter } from 'next/navigation';
+import ProductParent from '@/app/UI/product/productParent';
 
-const ProductGrid = ({ /* product, customerInfo, orderDetails */ }) => {
-  return (
+
+const ProductGrid: FC<{ params: { productid: string, searchParams : { query : string, sizeName : string} } }> = ({ params }) => {
+  console.log(params);
+  const sizeName = params.searchParams;
+  console.log(sizeName); 
+    return (
     <div className="grid grid-cols-3 gap-4 p-4">
-      {/* Productos Section */}
-      <div className="col-span-3 md:col-span-2">
-        <h2 className="text-xl font-bold mb-4">Titulo del producto</h2>
-        <div className='flex flex-row'>
-            <div className="flex-1 mt-4 md:mt-0">
-                <Image src="https://trcmnbco.s3.amazonaws.com/WS41286-BK_1.jpg" alt="Producto" width={400} height={500} className="w-full h-auto" />
-            </div>
-            <div className="flex-1 p-4">
-                <h1 className="text-xl md:text-2xl font-bold">{ "productParent.name"}</h1>
-                <p>TNP:{"productParent.TNP"}</p>
-                <p className="text-lg">${"productParent.price"}</p>
-                <div className="mt-4">
-                   {/*  <ProductColors variationsColor={productParent.variationsColor}/>
-                    <ProductSize variationsColor={productParent.variationsColor} setVariation={setVariation} setSuggestion={setSuggestion} /> */}
-                </div>
-                <div className="mt-4">
-                    <p>Merchant: {/* productParent.merchant */}</p>
-                </div>
-                <div className="mt-4 flex flex-col md:flex-row  md:space-x-4">
-                    {/* <ProductDescription productParent={product?.product}/>
-                    <ProductStores store={product?.stores} /> */}
-                </div>
-                <div className="mt-4">
-                </div>
-            </div>
-        </div>
-       
-      </div>
+      <ProductParent TNP={params.productid} />
 
       {/* Información del Cliente Section */}
       <div className="col-span-3 md:col-span-1">
@@ -56,5 +34,6 @@ const ProductGrid = ({ /* product, customerInfo, orderDetails */ }) => {
     </div>
   );
 };
+
 
 export default ProductGrid;

@@ -1,17 +1,19 @@
 "use client";
 
 import React from "react";
+//import { useRouter } from "next/router";
+import { useRouter } from 'next/navigation';
 import { fetchRelatedEmbedding, fetchStoreByTN } from "@/app/lib/data";
 
-const selectSize = async (tn: string, sizeName: string, setVariation: any, setSuggestion: any) => {
-  const responseVariation = await fetchStoreByTN(tn);
-  setVariation(responseVariation);
-  const responseSugestion = await fetchRelatedEmbedding(tn, sizeName);
-  setSuggestion(responseSugestion);
 
-}
+const ProductSize = ({ variationsColor, TNP}: { variationsColor: any, TNP: string }) => {
+  const router = useRouter();
+  const selectSize = async (tnp: string, tn: string, sizeName: string) => {
+    /* const responseVariation = await fetchStoreByTN(tn);
+      const responseSugestion = await fetchRelatedEmbedding(tn, sizeName); */
+     router.push(`/dashboard/products/${tnp}?sizeName=${sizeName}`)
+  }
 
-const ProductSize = ({ variationsColor, setVariation, setSuggestion }: { variationsColor: any, setVariation: any, setSuggestion: any }) => {
   return (
     <>
       <label className="block text-sm font-medium">Talla (US):</label>
@@ -27,11 +29,22 @@ const ProductSize = ({ variationsColor, setVariation, setSuggestion }: { variati
       </div>
       <div className="hidden md:flex flex-wrap">
         {variationsColor[0].variationsSize.map((variation: any) => (
-            <button key={variation.TN} className="border rounded p-2 w-10 h-10 m-1" onClick={() => selectSize(variation.TN, variation.sizeName, setVariation, setSuggestion)}>{variation.sizeName}</button>
+          <button key={variation.TN} className="border rounded p-2 w-10 h-10 m-1" onClick={() => selectSize(TNP, variation.TN, variation.sizeName)}>{variation.sizeName}</button>
         ))}
       </div>
     </>
   );
 };
+
+/* export async function getServerSideProps(context: any) {
+  const { tnp, sizeName } = context.query;
+  //const response = await fetchStoreByTN(TNP);
+  return {
+    props: {
+      tnp: tnp || "",
+      sizeName: sizeName || "",
+    },
+  };
+} */
 
 export default ProductSize;
