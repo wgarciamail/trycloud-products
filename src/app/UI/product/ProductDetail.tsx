@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, Suspense } from 'react';
 import ProductStores from './ProductStores';
+import { ProductCustomer } from './ProductCustomer';
 
 interface ProductInfoProps {
   TN: string;
@@ -43,20 +44,13 @@ const ProductTabs: React.FC<ProductInfoProps> = ({ TN, name, price, description 
       <div className="p-4">
         {activeTab === 'customer' && 
         (
-          <div className='w-full'>
-            <h2 className="text-xl font-bold mb-4">Detalles</h2>
-            <p><strong>Nombre:</strong> {"orderDetails.invoiceNumber"}</p>
-            <p><strong>Dirección:</strong> {"orderDetails.previousBalance"}</p>
-            <p><strong>Teléfono:</strong> {"orderDetails.discount"}</p>
-            <p><strong>Fecha Creación:</strong> {"orderDetails.couponsUsed"}</p>
-          </div>
-        )
-        }
+            <ProductCustomer />
+        )}
         {activeTab === 'stores' && 
         (
           <div className='w-full'>
             <Suspense fallback={<div>Loading...</div>}>
-                    <ProductStores TN={TN} />
+              <ProductStores TN={TN} />
             </Suspense>
           </div>
         )}

@@ -9,7 +9,7 @@ const ProductStores = async({TN}: { TN: string | null}) => {
   console.log(data)
   const {stores} = data
   return (
-    <div>
+    <>
         <h2 className="text-lg font-bold">Stores</h2>
         <ul className="list-disc pl-5">
             { stores.map((store: any) => (
@@ -17,7 +17,7 @@ const ProductStores = async({TN}: { TN: string | null}) => {
             ))}
            
         </ul>
-    </div>
+    </>
   );
 };
 

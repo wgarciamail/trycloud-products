@@ -13,7 +13,7 @@ const ProductDescription = async({TN }: { TN: string | null}) => {
         <li>Marca: {product.brandName}</li>
         <li>model: {product.model}</li>
         <li>colorName: {product.variationsColor?.[0]?.colorName}</li>
-        <li>Size: {product[0]?.sizeName}</li>
+        <li>Size: {product.variationsColor?.[0]?.variationsSize?.[0]?.sizeName}</li>
         <li>TN: {TN}</li>
         <li>UPC: {product.upc}</li>
         <li>statusGeneric: {product.variationsColor?.[0]?.variationsSize?.[0]?.statusGeneric}</li>
