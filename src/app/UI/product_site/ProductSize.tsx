@@ -1,10 +1,10 @@
 "use client";
 
 import React from "react";
-import { fetchRelatedEmbedding, fetchStoreByTN } from "@/app/lib/data";
+import { fetchRelatedEmbedding, fetchProductByTN } from "@/app/lib/data";
 
 const selectSize = async (tn: string, sizeName: string, setVariation: any, setSuggestion: any) => {
-  const responseVariation = await fetchStoreByTN(tn);
+  const responseVariation = await fetchProductByTN(tn);
   setVariation(responseVariation);
   const responseSugestion = await fetchRelatedEmbedding(tn, sizeName);
   setSuggestion(responseSugestion);

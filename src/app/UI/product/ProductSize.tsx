@@ -3,17 +3,14 @@
 import React from "react";
 //import { useRouter } from "next/router";
 import { useRouter } from 'next/navigation';
-import { fetchRelatedEmbedding, fetchStoreByTN } from "@/app/lib/data";
 
 
 const ProductSize = ({ variationsColor, TNP}: { variationsColor: any, TNP: string }) => {
   const router = useRouter();
   const selectSize = async (tnp: string, tn: string, sizeName: string) => {
-    /* const responseVariation = await fetchStoreByTN(tn);
-      const responseSugestion = await fetchRelatedEmbedding(tn, sizeName); */
-     router.push(`/dashboard/products/${tnp}?sizeName=${sizeName}`)
+     router.push(`/dashboard/products/${tnp}?tn=${tn}&sizeName=${sizeName}`)
   }
-
+  //console.log(variationsColor[0].variationsSize)
   return (
     <>
       <label className="block text-sm font-medium">Talla (US):</label>

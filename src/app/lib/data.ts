@@ -2,10 +2,11 @@ import { makeRequest, HttpMethods, ApiResponse } from '@/app/lib/apiServices'
 import { productParent } from '@/app/lib/definitions';
 
 
-export const fetchProduct = async (productid: string): Promise<productParent | null> => {
+export const fetchProduct = async (TNP: string): Promise<productParent | null> => {
+  console.log("Make request for product: " + TNP)
   const response: ApiResponse | null = await makeRequest(
        HttpMethods.GET,
-            `/products/getProductsTNP?tnp=${productid}`
+            `/products/getProductsTNP?tnp=${TNP}`
   );
   if (response.error && response.error.message &&  0 < response.error.message.length) {
     console.log(response.error.message ?? 'Error desconocido al obtener el Producto');
@@ -41,7 +42,8 @@ export const fetchRelatedEmbedding = async (tn: string, sizeName: string): Promi
   }
 }
 
-export const fetchStoreByTN = async (tn: string): Promise<any> => {
+export const fetchProductByTN = async (tn: string): Promise<any> => {
+  console.log("Make request for store: " + tn)
   const response: ApiResponse | null = await makeRequest(
        HttpMethods.GET,
             `/products/getStoreByTN?tn=${tn}`
@@ -50,7 +52,8 @@ export const fetchStoreByTN = async (tn: string): Promise<any> => {
     console.log(response.error.message ?? 'Error desconocido al obtener el Producto');
     return null;
   } else {
-    return response.data.stores;
+    //console.log(response);
+    return response.data;
   }
 }
 
