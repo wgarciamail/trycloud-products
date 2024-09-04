@@ -13,7 +13,6 @@ export const ProductCustomer = async () => {
     try {
       setLoading(true);
       const customerData = await fetchCustomerData();
-      //console.log("Customer data: ",customerData);
       setCustomerData(customerData);
     } catch (error) {
       console.log(error);
@@ -28,6 +27,7 @@ export const ProductCustomer = async () => {
 
   if (loading) return <div>Loading...</div>;
   if (!customerData) return <div>No customer data</div>;
+
   const { customer, address, customerInfo } = customerData as {
     customer : {
       firstName: string;
@@ -49,7 +49,6 @@ export const ProductCustomer = async () => {
       ip_address: string;
       action: string;
       //create_at: any;
-
     }
   };
  
@@ -62,7 +61,7 @@ export const ProductCustomer = async () => {
         <p><strong>Dirección:</strong> {address?.address}</p>
         <p><strong>Ciudad:</strong> {address?.city_name}</p>
         <p><strong>País:</strong> {address?.country_name}</p>
-        <p><strong>Teléfono:</strong> {"orderDetails.discount"}</p>
+        <p><strong>Teléfono:</strong> {"__-___.__.__"}</p>
         <h2 className="text-xl font-bold my-4">Actividad</h2>
         <p><strong>Fecha Creación:</strong> {/* customerInfo?.create_at */}</p>
         <p><strong>Fecha Login:</strong> {/* customerInfo?.last_login.date */}</p>
