@@ -5,6 +5,7 @@ const ProductGrid  = ({params, searchParams}:{
   params: {productid: string},
   searchParams: {
     tn: string,
+    sizeName: string,
   }
 }) => {
     return (
@@ -13,7 +14,7 @@ const ProductGrid  = ({params, searchParams}:{
         <ProductParent TNP={params.productid} TN={searchParams.tn} />
       </div>
       <div className="col-span-4 md:col-span-4">
-        <ProductDetail TN={searchParams.tn} name='customer' price={0} description='description' />
+        <ProductDetail TN={searchParams.tn} sizeName={searchParams.sizeName} name='customer' price={0} description='description' />
       </div>
     </div>
   );

@@ -2,15 +2,18 @@
 import React, { useState, Suspense } from 'react';
 import ProductStores from './ProductStores';
 import { ProductCustomer } from './ProductCustomer';
+import { ProductCart } from './ProductCart';
+import ProductSuggestion from './ProductSuggestion';
 
 interface ProductInfoProps {
   TN: string;
+  sizeName: string;
   name: string;
   price: number;
   description: string;
 }
 
-const ProductTabs: React.FC<ProductInfoProps> = ({ TN, name, price, description }) => {
+const ProductTabs: React.FC<ProductInfoProps> = ({ TN, sizeName, name, price, description }) => {
   const [activeTab, setActiveTab] = useState('customer');
 
   return (
@@ -44,7 +47,9 @@ const ProductTabs: React.FC<ProductInfoProps> = ({ TN, name, price, description 
       <div className="p-4">
         {activeTab === 'customer' && 
         (
+          <Suspense fallback={<div>Loading...</div>}>
             <ProductCustomer />
+          </Suspense>
         )}
         {activeTab === 'stores' && 
         (
@@ -54,8 +59,19 @@ const ProductTabs: React.FC<ProductInfoProps> = ({ TN, name, price, description 
             </Suspense>
           </div>
         )}
-        {activeTab === 'cart' && <div><strong>carrito:</strong> {description}</div>}
-        {activeTab === 'suggest' && <div><strong>Sugeridos:</strong> {description}</div>}
+        {activeTab === 'cart' && 
+        (
+          <Suspense fallback={<div>Loading...</div>}>
+            <ProductCart />
+          </Suspense>
+        )}
+        {activeTab === 'suggest' && 
+        (
+          <Suspense fallback={<div>Loading...</div>}>
+            <ProductSuggestion TN={TN} sizeName={sizeName} />
+          </Suspense>
+        )
+        }
       </div>
     </div>
   );

@@ -1,60 +1,26 @@
-import React from "react";
-import Image from "next/image";
+import React from 'react'
+import { ProductCartDetail } from './ProductCartDetail'
+import { fetchCart } from '@/app/lib/data';
 
-export interface CartItem {
-  upc: string;
-  sizeName: string;
-  colorName: string;
-  quantity: number;
-  price: number;
-  image: string;
-  sources: any;
-}
+export const ProductCart = async() => {
+  const cart = await fetchCart();
+  const cartItems = cart.products;
+  const cartItemsDeleted = cart.deleted;
+  const availableStores = cart.availableStore;
+  const totalAmount = cartItems.reduce((total: number, item: any) => total + item.price * item.quantity, 0);
 
-export const CartNavbar = ({
-  cartItems,
-  title,
-  totalAmount,
-}: {
-  cartItems: Array<CartItem> | [];
-  title: string;
-  totalAmount: number | 0;
-}) => {
-  if (!Array.isArray(cartItems)) return [];
   return (
-    <div>
-      <h2 className="text-lg font-bold mt-2 text-red-600">
-        {title} ({cartItems.length})
-      </h2>
-      {(cartItems as CartItem[]).map((item, index) => (
-        <div key={index} className="flex flex-row space-x-2 mb-3">
-          <Image
-            src={item.image}
-            width={100}
-            height={100}
-            alt="Vista 1"
-            className="border h-24 object-cover"
-          />
-          <div key={index} className="mb-4">
-            <div className="font-bold">{item.upc}</div>
-            <div className="text-xs">Talla: {item.sizeName}</div>
-            <div className="text-xs">Color: {item.colorName}</div>
-            <div className="text-xs">${item.price.toFixed(2)}</div>
-          </div>
-          <div>
-            <div className="text-xs  border-t-2">
-                {(item.sources as Array<any>).map((source, id) => (
-                    <div key={id}>{source.warehouse} ({source.quantity})</div>
-                ))}
-            </div>
-          </div>
-        </div>
-      ))}
-      {totalAmount >0 && (
-       <div className="font-bold text-xs">
-            Total: ${totalAmount.toFixed(2)}
-        </div>
-      )}
-    </div>
+    <>
+      <div className="mb-4 border rounded-md p-4">
+        <div className="text-lg font-bold mb-2">Tiendas Seleccionadas</div>
+        {(availableStores as any[]).map((store, index) => (
+          <div key={index}>{store}</div>
+        ))}
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <ProductCartDetail cartItems={cartItems} title="Carrito" totalAmount={totalAmount} />
+        <ProductCartDetail cartItems={cartItemsDeleted} title="Eliminados" totalAmount={0}/>
+      </div>
+    </>
   )
 }
