@@ -1,13 +1,9 @@
-import { productSuggestion } from "@/app/lib/definitions";
+import { productParent, productSuggestion } from "@/app/lib/definitions";
 import React from "react";
 import Image from "next/image";
-import { fetchRelatedEmbedding } from "@/app/lib/data";
 
-const ProductSuggestion = async({TN, sizeName}: {TN: string, sizeName: string}) => {
-  if (!TN || !sizeName) return <div>Seleccione una talla para ver sugerencias de productos</div>;
-  const suggestion: productSuggestion[] = await fetchRelatedEmbedding(TN, sizeName);
-  console.log("suggestion", suggestion);
-    if (!suggestion || suggestion.length === 0) return (
+const ProductSuggestion = ({suggestion} : {suggestion: Array<productSuggestion>}) => {
+    if (!suggestion) return (
         <div>No hay sugerencias de productos sugeridos</div>
     );
   return (

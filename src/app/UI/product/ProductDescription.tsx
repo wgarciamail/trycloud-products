@@ -1,19 +1,22 @@
-import { productParent, productTN, variationsSize } from '@/app/lib/definitions'
+import { fetchProductByTN } from "@/app/lib/data";
 import React from 'react'
 
-const ProductDescription = ({productParent: productParent}: { productParent: productParent | null | undefined}) => {
-  if (productParent == null) return <h1>No se encontro el Producto</h1>
+const ProductDescription = async({TN }: { TN: string | null}) => {
+  if (TN == null) return <h1>No se encontro el Producto</h1>
+  const data = await fetchProductByTN(TN);
+  if (data == null) return <h1>No se encontro el Producto</h1>
+  const {product} = data
   return (
     <div>
         <h2 className="text-lg font-bold">Descripción</h2>
         <ul className="list-disc pl-5">
-        <li>Marca: {productParent.brandName}</li>
-        <li>model: {productParent.model}</li>
-        <li>colorName: {productParent.variationsColor?.[0]?.colorName}</li>
-        <li>Size: {productParent.variationsColor?.[0]?.variationsSize?.[0]?.sizeName}</li>
-        <li>TN: {productParent.variationsColor?.[0]?.variationsSize?.[0]?.TN}</li>
-        <li>UPC: {productParent.variationsColor?.[0]?.variationsSize?.[0]?.Upc}</li>
-        <li>statusGeneric: {productParent.variationsColor?.[0]?.variationsSize?.[0]?.statusGeneric}</li>
+        <li>Marca: {product.brandName}</li>
+        <li>model: {product.model}</li>
+        <li>colorName: {product.variationsColor?.[0]?.colorName}</li>
+        <li>Size: <span className="font-bold text-red-500">{product.variationsColor?.[0]?.variationsSize?.[0]?.sizeName}</span></li>
+        <li>TN: {TN}</li>
+        <li>UPC: {product.upc}</li>
+        <li>statusGeneric: {product.variationsColor?.[0]?.variationsSize?.[0]?.statusGeneric}</li>
         </ul>
     </div>
   )

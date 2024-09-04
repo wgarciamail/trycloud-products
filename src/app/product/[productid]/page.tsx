@@ -4,12 +4,12 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { FC } from 'react';
 import { fetchProduct } from '@/app/lib/data';
-import ProductImages from '@/app/UI/product/ProductImages';
-import ProductColors  from '@/app/UI/product/ProductColors';
-import ProductSize  from '@/app/UI/product/ProductSize';
-import ProductStores from '@/app/UI/product/ProductStores';
-import ProductDescription from '@/app/UI/product/ProductDescription';
-import ProductSuggestion from '@/app/UI/product/ProductSuggestion';
+import ProductImages from '@/app/UI/product_site/ProductImages';
+import ProductColors  from '@/app/UI/product_site/ProductColors';
+import ProductSize  from '@/app/UI/product_site/ProductSize';
+import ProductStores from '@/app/UI/product_site/ProductStores';
+import ProductDescription from '@/app/UI/product_site/ProductDescription';
+import ProductSuggestion from '@/app/UI/product_site/ProductSuggestion';
 import { productParent, productSuggestion, productTN } from '@/app/lib/definitions';
 import { AuthService } from '@/app/lib/authService';
 

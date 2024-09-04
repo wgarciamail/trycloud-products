@@ -61,9 +61,15 @@ const nextConfig = {
           hostname: 'dieselcolombia.vteximg.com.br',
           port: '',
           pathname: '*/**',
-        }
+        },
+        {
+          protocol: 'https',
+          hostname: 'trycloud.s3.us-east-2.amazonaws.com',
+          port: '',
+          pathname: '*/**',
+        },
         
-        //superdrycolombia.vteximg.com.br
+        //
       ],
     },
   };

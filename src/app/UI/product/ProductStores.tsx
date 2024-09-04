@@ -1,29 +1,37 @@
-"use client";
-
+import { fetchCustomerData, fetchProductByTN } from "@/app/lib/data";
 import React from "react";
 
 
-
-const ProductStores = ({store}: { store: any}) => {
+const ProductStores = async({TN}: { TN: string | null}) => {
+  if (TN == null) return <p>Error: falta el parámetro TN</p>
+  const dataProduct = await fetchProductByTN(TN)
+  const dataCloseStore = await fetchCustomerData();
+  console.log(dataCloseStore.stores);
+  const {stores} = dataProduct
   return (
-    <div>
-        <h2 className="text-lg font-bold">Stores</h2>
-        <ul className="list-disc pl-5">
-            {/*variationsColor[0].variationsSize.map((size: any) => (
-                size.source.map((source: any) => (
-                    <li key={source.warehouse}>{size.sizeName}-{source.warehouse}-({source.quantity})</li>
-                ))
-               //<li key={variation.stock}>{variation.sizeName} - { variation.stock}</li>
-                
-            ))*/}
-
-            { store == null || store.length == 0 ? <li>No hay existencias</li> :
-            store.map((store: any) => (
-                <li key={store.warehouse}>{store.warehouse}- ({store.quantity})</li>
+    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <div className="col-span-1">
+          <h2 className="text-lg font-bold">Tiendas del producto</h2>
+          {dataProduct == null || dataProduct.stores == null || dataProduct.stores.length == 0 ? <p>No hay existencias/tiendas</p> :
+          (<ul className="list-disc pl-5 border">
+              { stores.map((store: any) => (
+                  <li key={store.warehouse}>{store.warehouse}- ({store.quantity})</li>
+              ))}
+          </ul>)
+          }
+      </div>
+      <div className="col-span-2">
+        <h2 className="text-lg font-bold">Tiendas Cercanas</h2>
+        {dataCloseStore == null || dataCloseStore.stores == null || dataCloseStore.stores.length == 0 ? <p>No hay tiendas</p> :  
+        (<ul className="list-disc pl-5 border">
+            { dataCloseStore.stores.map((store: any) => (
+                <li key={store.store_id}>{store.store_code}- ({store.name}) - {store.distance.toFixed(2)}</li>
             ))}
-           
         </ul>
+        )}
+      </div>
     </div>
+
   );
 };
 
