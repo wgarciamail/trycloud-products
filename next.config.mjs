@@ -74,7 +74,25 @@ const nextConfig = {
           port: '',
           pathname: '*/**',
         },
-        //https://
+        {
+          protocol: 'https',
+          hostname: 'trcmmoda.s3.amazonaws.com',
+          port: '',
+          pathname: '*/**',
+        },
+        {
+          protocol: 'https',
+          hostname: 'prochampions.vteximg.com.br',
+          port: '',
+          pathname: '*/**',
+        },
+        {
+          protocol: 'https',
+          hostname: 'girbaud.vteximg.com.br',
+          port: '',
+          pathname: '*/**',
+        },
+        //
       ],
     },
   };

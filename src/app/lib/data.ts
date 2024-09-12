@@ -4,11 +4,11 @@ import { AuthService } from './authService';
 
 
 export const fetchProduct = async (TNP: string): Promise<productParent | null> => {
-  //console.log("Make request for product: " + TNP)
   const response: ApiResponse | null = await makeRequest(
        HttpMethods.GET,
             `/products/getProductsTNP?tnp=${TNP}`
   );
+  //console.log(`response fetchProduct(${TNP}): `,response);
   if (response.error && response.error.message &&  0 < response.error.message.length) {
     console.log(response.error.message ?? 'Error desconocido al obtener el Producto');
     return null;
@@ -18,34 +18,42 @@ export const fetchProduct = async (TNP: string): Promise<productParent | null> =
 }
 
 export const fetchProductByTN = async (tn: string): Promise<any> => {
-  //console.log("Make request for store: " + tn)
   const response: ApiResponse | null = await makeRequest(
        HttpMethods.GET,
             `/products/getStoreByTN?tn=${tn}`
   );
+  //console.log(`response fetchProductByTN(${tn}): `,response);
   if (response.error && response.error.message &&  0 < response.error.message.length) {
     console.log(response.error.message ?? 'Error desconocido al obtener el Producto');
     return null;
   } else {
-    //console.log(response);
     return response.data;
   }
 }
 
-export const fetchSearchProducts = async (providerName?: string | null, keword?: string | null): Promise<Array<any> | null> => {
+export const fetchSearchProducts = async (providerName?: string | null, keword?: string | null, pageToken?: string | null, pageDirection?: string | null): Promise<Array<any> | null> => {
   const searchParameters = new URLSearchParams();
-  searchParameters.append('search', keword ?? '');
-  searchParameters.append('providerName', providerName ?? '');
-  console.log(searchParameters.toString());
+  if (keword !== undefined && keword !== '' && keword !== null) {
+    searchParameters.append('search', keword);
+  }
+  if (providerName !== undefined && providerName !== '' && providerName !== null) {
+    searchParameters.append('providerName', providerName);
+  }
+  if (pageToken !== undefined && pageToken !== '' && pageToken !== null) {
+    searchParameters.append('paginationToken', pageToken);
+  }
+  if (pageDirection !== undefined && pageDirection !== '' && pageDirection !== null) {
+    searchParameters.append('paginationDirection', pageDirection);
+  }
   const response: ApiResponse | null = await makeRequest(
        HttpMethods.GET,
             `/products/productsSearch?${searchParameters.toString()}`
   );
+  //console.log(`response fetchSearchProducts(${providerName}, ${keword}): `,response);
   if (response.error && response.error.message &&  0 < response.error.message.length) {
-    console.log(response.error.message ?? 'Error desconocido al obtener la lista de Productos');
+    console.log(response.error.message ?? 'Error desconocido al obtener la lista de productos.');
     return null;
   } else {
-    console.log(response);
     return Array.isArray(response.data) ? response.data : [];
   }
 }

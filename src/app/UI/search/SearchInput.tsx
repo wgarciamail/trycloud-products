@@ -11,11 +11,15 @@ const SearchInput = () => {
   const searchParams = useSearchParams()
   const router = useRouter();
   const providerName  = searchParams.get('providerName');
-  const applySearch = (productName?: string) => {
+
+  const applySearch = (productName: string = "") => {
     const searchInput = document.getElementById("search") as HTMLInputElement;
+    productName??=providerName ?? "";
     console.log("search: " + searchInput.value + " - " + productName);
+
     router.push(`?providerName=${productName}&keword=${searchInput.value}`)
   };
+
   return (
     <>
       <div className="flex justify-center items-center gap-1 mb-4">

@@ -16,7 +16,7 @@ const ProductDescription = async({TN }: { TN: string | null}) => {
         <li>Size: <span className="font-bold text-red-500">{product.variationsColor?.[0]?.variationsSize?.[0]?.sizeName}</span></li>
         <li>TN: {TN}</li>
         <li>UPC: {product.upc}</li>
-        <li>statusGeneric: {product.variationsColor?.[0]?.variationsSize?.[0]?.statusGeneric}</li>
+        <li>statusGeneric: <span className="font-bold text-red-500">{product.variationsColor?.[0]?.variationsSize?.[0]?.statusGeneric}</span></li>
         </ul>
     </div>
   )
