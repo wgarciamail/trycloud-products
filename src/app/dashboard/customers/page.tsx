@@ -2,7 +2,7 @@ import React from 'react'
 
 const page = () => {
   return (
-    <div>page Customers</div>
+    <div>Colocar aqui la accion de customers.</div>
   )
 }
 

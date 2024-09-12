@@ -32,6 +32,24 @@ export const fetchProductByTN = async (tn: string): Promise<any> => {
   }
 }
 
+export const fetchSearchProducts = async (providerName?: string | null, keword?: string | null): Promise<Array<any> | null> => {
+  const searchParameters = new URLSearchParams();
+  searchParameters.append('search', keword ?? '');
+  searchParameters.append('providerName', providerName ?? '');
+  console.log(searchParameters.toString());
+  const response: ApiResponse | null = await makeRequest(
+       HttpMethods.GET,
+            `/products/productsSearch?${searchParameters.toString()}`
+  );
+  if (response.error && response.error.message &&  0 < response.error.message.length) {
+    console.log(response.error.message ?? 'Error desconocido al obtener la lista de Productos');
+    return null;
+  } else {
+    console.log(response);
+    return Array.isArray(response.data) ? response.data : [];
+  }
+}
+
 export const fetchProductsByBrand = async (brandName: string): Promise<Array<any> | null> => {
   const response: ApiResponse | null = await makeRequest(
        HttpMethods.GET,

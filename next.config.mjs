@@ -68,8 +68,13 @@ const nextConfig = {
           port: '',
           pathname: '*/**',
         },
-        
-        //
+        {
+          protocol: 'https',
+          hostname: 'bamers.cl',
+          port: '',
+          pathname: '*/**',
+        },
+        //https://
       ],
     },
   };
