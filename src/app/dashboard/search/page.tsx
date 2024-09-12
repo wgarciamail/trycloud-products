@@ -3,6 +3,7 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import SearchInput from "@/app/UI/search/SearchInput";
 
 export default async function page({ searchParams }: {
   searchParams: {
@@ -10,9 +11,6 @@ export default async function page({ searchParams }: {
     keword?: string,
 
   }}) {
-  const applySearch = () => {
-    console.log(searchParams.keword);
-  }
   const products = await fetchSearchProducts(searchParams.providerName, searchParams.keword);
   if (products === null || products.length === 0) {
     return <div>Error al cargar la lista de productos</div>;
@@ -23,18 +21,8 @@ export default async function page({ searchParams }: {
         Lista de Productos
       </h1>
 
-      <div className="flex justify-center items-center gap-1 mb-4">
-        <input
-          type="text"
-          name="search"
-          id="search"
-          placeholder="Dime lo que quieres encontrar"
-          className="md:w-1/3 p-2 border border-gray-300 rounded"
-        />
-        <Link href={`/dashboard/search?providerName=${searchParams.providerName}&keword=Antibacterial`}>
-          <MagnifyingGlassIcon className="w-10 text-gray-300 "/>
-          </Link>
-      </div>
+      <SearchInput />
+    
       {/** Lista de productos */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {products.map((product) => (
