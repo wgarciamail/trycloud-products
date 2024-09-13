@@ -2,7 +2,6 @@ import { fetchSearchProducts } from "@/app/lib/data";
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import SearchInput from "@/app/UI/search/SearchInput";
 
 export default async function page({ searchParams }: {
@@ -26,14 +25,17 @@ export default async function page({ searchParams }: {
   if (searchParams.providerName === undefined) {
     searchParams.providerName = '';
   }
-  let pageToken = searchParams.pageToken ?? '';
+  let pageTokenAfter =  '';
+  let pageTokenBefore = '';
   if (products !== null) {
     if (products.length > 0) {
-      pageToken = products[products.length - 1].paginationToken;
+      pageTokenAfter = products[products.length - 1].paginationToken;
+      pageTokenBefore = products[0].paginationToken;
     }
   }
 
-  console.log('pageToken: ', pageToken);
+  //console.log('pageToken: ', pageTokenAfter, " - ",pageTokenBefore);
+  //console.log('products: ', products);
 
   return (
     <>
@@ -56,21 +58,33 @@ export default async function page({ searchParams }: {
             <div key={product.TN} className="border p-4 rounded-lg shadow-md">
               <h2>{product.productName}</h2>
               <Image
-                src={product.images[0].Url}
+                src={product.image}
                 width={200}
                 height={200}
                 alt={product.productName}
               ></Image>
               <p className="text-xs">TNP: {product.TNP}</p>
               <p className="text-gray-500 text-xxs">{product.providerName}</p>
+              <p className="text-gray-500 text-xxs">{product.score}</p>
+              <p className="text-gray-500 text-xxs">{product.paginationToken}</p>
+              <p className="text-gray-500 text-xxs">D update:{product.dateUpdate}</p>
+              <p className="text-gray-500 text-xxs">D created:{product.dateCreated}</p>
             </div>
           </Link>
         ))}
       </div>
-        <h3 className="text-2xl font-bold mb-4 text-center">Aqui va el paginador</h3>
       <div className="flex justify-center items-center gap-1 mt-8">
-        <Link href={`/dashboard/search?providerName=${searchParams.providerName}&keword=${searchParams.keword}&pageToken=${pageToken}&pageDirection=before`}>Anterior</Link>
-        <Link href={`/dashboard/search?providerName=${searchParams.providerName}&keword=${searchParams.keword}&pageToken=${pageToken}&pageDirection=after`}>siguiente</Link>
+        <Link 
+          href={`/dashboard/search?providerName=${searchParams.providerName}&keword=${searchParams.keword}&pageToken=${pageTokenBefore}&pageDirection=before`}
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        >
+          Anterior
+        </Link>
+        <Link 
+          href={`/dashboard/search?providerName=${searchParams.providerName}&keword=${searchParams.keword}&pageToken=${pageTokenAfter}&pageDirection=after`}
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          >
+            siguiente</Link>
       </div>
     </>
   );

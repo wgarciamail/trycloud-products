@@ -12,12 +12,12 @@ const SearchInput = () => {
   const router = useRouter();
   const providerName  = searchParams.get('providerName');
 
-  const applySearch = (productName: string = "") => {
+  const applySearch = (providerName: string = "") => {
     const searchInput = document.getElementById("search") as HTMLInputElement;
-    productName??=providerName ?? "";
-    console.log("search: " + searchInput.value + " - " + productName);
+    providerName??=providerName ?? "";
+    console.log("search: " + searchInput.value + " - " + providerName);
 
-    router.push(`?providerName=${productName}&keword=${searchInput.value}`)
+    router.push(`?providerName=${encodeURIComponent(providerName)}&keword=${encodeURIComponent(searchInput.value)}`)
   };
 
   return (
