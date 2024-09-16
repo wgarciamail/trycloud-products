@@ -15,8 +15,14 @@ export class AuthService {
      * @returns boolean
      */
     public static validateSession(): boolean{
+        if (typeof window === 'undefined') return false;
         const user  = localStorage.getItem('user') as string;
         this.authModel  = JSON.parse(user) as AuthModel;
         return !!this.authModel?.token && !!this.authModel?.refreshToken;
+    }
+
+    public static delSession() {
+        if (typeof window === 'undefined') return;
+        localStorage.removeItem('user');
     }
 }

@@ -113,3 +113,38 @@ export const fetchCart = async (): Promise<any> => {
     return response.data;
   }
 }
+
+export const fetchLoginPhone = async (phone: string): Promise<any> => {
+  const response: ApiResponse | null = await makeRequest(
+       HttpMethods.POST,
+            `/customer/loginWithPhoneNumber`,
+            {phoneNumber: phone}
+  );
+  if (response.error && response.error.message &&  0 < response.error.message.length) {
+    console.log(response.error.message ?? 'Error desconocio al enviar el teléfono.');
+    return null;
+  } else {
+    return true;
+  }
+}
+
+export const fetchLoginPin = async (phone: string, pin: string): Promise<any> => {
+  const response: ApiResponse | null = await makeRequest(
+       HttpMethods.POST,
+            `/customer/validateOTPForLogin`,
+            {phoneNumber: phone, codeOTP: pin}
+  );
+
+  if (response.error && response.error.message &&  0 < response.error.message.length) {
+    console.log(response.error.message ?? 'Error desconocido al enviar el PIN.');
+    return null;
+  } else {
+    const {data} = response;
+    AuthService.setAuthModel({
+      token: data.accessToken,
+      refreshToken: data.refreshToken,
+      isAnonimo:false
+  })
+    return true;
+  }
+}

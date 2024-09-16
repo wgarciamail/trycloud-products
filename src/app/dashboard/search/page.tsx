@@ -34,9 +34,6 @@ export default async function page({ searchParams }: {
     }
   }
 
-  //console.log('pageToken: ', pageTokenAfter, " - ",pageTokenBefore);
-  //console.log('products: ', products);
-
   return (
     <>
       <h1 className="text-2xl font-bold mb-4 text-center">
@@ -47,7 +44,7 @@ export default async function page({ searchParams }: {
 
       {products === null || products.length === 0 && (
         <div className="h-[50vh] flex justify-center items-center">
-          <h3 className="text-red-500 text-2xl font-bold text-center">No se encontraron registro para la búsqueda "{searchParams.keword}"</h3>
+          <h3 className="text-red-500 text-2xl font-bold text-center">No se encontraron registro para la búsqueda &quot;{searchParams.keword}&quot;</h3>
         </div>
       )}
     
