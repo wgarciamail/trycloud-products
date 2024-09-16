@@ -67,8 +67,8 @@ export default async function page({ searchParams }: {
               <p className="text-gray-500 text-xxs">{product.providerName}</p>
               <p className="text-gray-500 text-xxs">{product.score}</p>
               <p className="text-gray-500 text-xxs">{product.paginationToken}</p>
-              <p className="text-gray-500 text-xxs">D update:{product.dateUpdate}</p>
-              <p className="text-gray-500 text-xxs">D created:{product.dateCreated}</p>
+              <p className="text-gray-500 text-xxs">Actualizado:{product.dateUpdate}</p>
+              <p className="text-gray-500 text-xxs">Creado:{product.dateCreated}</p>
             </div>
           </Link>
         ))}
