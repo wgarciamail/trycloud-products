@@ -71,7 +71,7 @@ export default function Component() {
           <AccordionTrigger>Mostrar todos los filtros</AccordionTrigger>
           <AccordionContent>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-              {["Categoría", "Precio", "Marca", "Calificación"].map(category => (
+              {[/* "Categoría", "Precio" */, "Marca"/* , "Calificación" */].map(category => (
                 <div key={category} className="border rounded-lg p-4">
                   <h3 className="font-semibold mb-2">{category}</h3>
                   <div className="space-y-2">
