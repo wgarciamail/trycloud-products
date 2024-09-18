@@ -13,23 +13,29 @@ type Filter = {
   label: string;
 }
 
-const filters: Filter[] = [
+/**Usdo de ejemplo para mostrar el uso de la librería */
+const filters_old: Filter[] = [
   { id: "category-electronics", category: "Categoría", label: "Electrónica" },
   { id: "category-clothing", category: "Categoría", label: "Ropa" },
   { id: "category-books", category: "Categoría", label: "Libros" },
   { id: "price-0-50", category: "Precio", label: "$0 - $50" },
   { id: "price-50-100", category: "Precio", label: "$50 - $100" },
   { id: "price-100-plus", category: "Precio", label: "$100+" },
-  { id: "brand-apple", category: "Marca", label: "Apple" },
+ /*  { id: "brand-apple", category: "Marca", label: "Apple" },
   { id: "brand-samsung", category: "Marca", label: "Samsung" },
-  { id: "brand-sony", category: "Marca", label: "Sony" },
+  { id: "brand-sony", category: "Marca", label: "Sony" }, */
   { id: "rating-4-plus", category: "Calificación", label: "4★ y más" },
   { id: "rating-3-plus", category: "Calificación", label: "3★ y más" },
   { id: "rating-2-plus", category: "Calificación", label: "2★ y más" },
 ]
 
-export default function Component() {
+export default function Component({brandList = [], categoryList}: {brandList: any[], categoryList: string[]}) {
   const [selectedFilters, setSelectedFilters] = useState<string[]>([])
+
+  const filters: Filter[] = [];
+  brandList.forEach(brand => {
+    filters.push({id: `brand-${brand._id}`, category: "Marca", label: `${brand._id} (${brand.count})`})
+  });
 
   const toggleFilter = (filterId: string) => {
     setSelectedFilters(prev => 
@@ -70,9 +76,9 @@ export default function Component() {
         <AccordionItem value="filters">
           <AccordionTrigger>Mostrar todos los filtros</AccordionTrigger>
           <AccordionContent>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
               {[/* "Categoría", "Precio" */, "Marca"/* , "Calificación" */].map(category => (
-                <div key={category} className="border rounded-lg p-4">
+                <div key={category} className="border rounded-lg p-4 bg-slate-50">
                   <h3 className="font-semibold mb-2">{category}</h3>
                   <div className="space-y-2">
                     {filters

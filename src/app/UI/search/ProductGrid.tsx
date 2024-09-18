@@ -30,7 +30,7 @@ const ProductGrid = async({ searchParams }: {
   let pageTokenAfter =  '';
   let pageTokenBefore = '';
   const { searchProducts: products, count, ProviderNameList } = results as searchFacet;
-  //console.log(ProviderNameList);
+  console.log(ProviderNameList);
   if (products !== null) {
     if (products.length > 0) {
       pageTokenAfter = products[products.length - 1].paginationToken;
@@ -40,7 +40,7 @@ const ProductGrid = async({ searchParams }: {
 
   return (
     <>
-      <ProductFilter />
+      <ProductFilter brandList={ProviderNameList} categoryList={[]}/>
 
       {products === null || products.length === 0 && (
         <div className="h-[50vh] flex justify-center items-center">
