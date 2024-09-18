@@ -50,20 +50,20 @@ const ProductGrid = async({ searchParams }: {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {products?.map((product) => (
           <Link href={`/dashboard/products/${product.TNP}`} key={product.TNP}>
-            <div key={product.TN} className="border p-4 rounded-lg shadow-md">
-              <h2>{product.productName}</h2>
+            <div key={product.TN} className="border p-4 rounded-lg shadow-md flex flex-col h-full">
+              <h2 className="truncate">{product.productName}</h2>
               <Image
                 src={product.image}
-                width={200}
+                width={180}
                 height={200}
                 alt={product.productName}
+                className="object-cover h-52 my-2 mx-auto"
               ></Image>
               <p className="text-xs">TNP: {product.TNP}</p>
               <p className="text-gray-500 text-xxs">{product.providerName}</p>
               <p className="text-gray-500 text-xxs">{product.score}</p>
-             {/*  <p className="text-gray-500 text-xxs">{product.paginationToken}</p> */}
-              <p className="text-gray-500 text-xxs">Actualizado:{product.dateUpdate}</p>
-              <p className="text-gray-500 text-xxs">Creado:{product.dateCreated}</p>
+            <p className="text-gray-500 text-xxs">Actualizado: {product.dateUpdate}</p>
+              <p className="text-gray-500 text-xxs">Creado: {product.dateCreated}</p>
             </div>
           </Link>
         ))}
