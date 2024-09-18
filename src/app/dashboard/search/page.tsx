@@ -3,6 +3,7 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import SearchInput from "@/app/UI/search/SearchInput";
+import ProductFilter from "@/app/UI/search/ProductFilter";
 
 export default async function page({ searchParams }: {
   searchParams: {
@@ -41,6 +42,8 @@ export default async function page({ searchParams }: {
       </h1>
 
       <SearchInput />
+
+      <ProductFilter />
 
       {products === null || products.length === 0 && (
         <div className="h-[50vh] flex justify-center items-center">
