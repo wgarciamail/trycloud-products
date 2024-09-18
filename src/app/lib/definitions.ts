@@ -62,3 +62,9 @@ export interface AuthModel {
     refreshToken: string;
     isAnonimo:boolean
 }
+
+export interface searchFacet {
+    count: number;
+    ProviderNameList: Array<any>;
+    searchProducts: Array<any>;
+}

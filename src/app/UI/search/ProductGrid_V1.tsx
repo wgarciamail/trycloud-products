@@ -1,9 +1,8 @@
 import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { fetchSearchFacetProducts } from "@/app/lib/data";
+import { fetchSearchProducts } from "@/app/lib/data";
 import ProductFilter from "@/app/UI/search/ProductFilter";
-import { searchFacet } from '@/app/lib/definitions';
 
 
 const ProductGrid = async({ searchParams }: {
@@ -14,7 +13,7 @@ const ProductGrid = async({ searchParams }: {
       pageDirection?: string
     }}) => {
 
- const results = await fetchSearchFacetProducts(searchParams.providerName, searchParams.keword, searchParams.pageToken, searchParams.pageDirection);
+ const products = await fetchSearchProducts(searchParams.providerName, searchParams.keword, searchParams.pageToken, searchParams.pageDirection);
   if (searchParams.keword === undefined) {
     searchParams.keword = '';
   }
@@ -29,8 +28,6 @@ const ProductGrid = async({ searchParams }: {
   }
   let pageTokenAfter =  '';
   let pageTokenBefore = '';
-  const { searchProducts: products, count, ProviderNameList } = results as searchFacet;
-  //console.log(ProviderNameList);
   if (products !== null) {
     if (products.length > 0) {
       pageTokenAfter = products[products.length - 1].paginationToken;
@@ -61,7 +58,7 @@ const ProductGrid = async({ searchParams }: {
               <p className="text-xs">TNP: {product.TNP}</p>
               <p className="text-gray-500 text-xxs">{product.providerName}</p>
               <p className="text-gray-500 text-xxs">{product.score}</p>
-             {/*  <p className="text-gray-500 text-xxs">{product.paginationToken}</p> */}
+              <p className="text-gray-500 text-xxs">{product.paginationToken}</p>
               <p className="text-gray-500 text-xxs">Actualizado:{product.dateUpdate}</p>
               <p className="text-gray-500 text-xxs">Creado:{product.dateCreated}</p>
             </div>

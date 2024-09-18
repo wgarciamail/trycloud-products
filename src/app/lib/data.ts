@@ -1,5 +1,5 @@
 import { makeRequest, HttpMethods, ApiResponse } from '@/app/lib/apiServices'
-import { productParent } from '@/app/lib/definitions';
+import { productParent, searchFacet } from '@/app/lib/definitions';
 import { AuthService } from './authService';
 
 
@@ -55,6 +55,33 @@ export const fetchSearchProducts = async (providerName?: string | null, keword?:
     return null;
   } else {
     return Array.isArray(response.data) ? response.data : [];
+  }
+}
+
+export const fetchSearchFacetProducts = async (providerName?: string | null, keword?: string | null, pageToken?: string | null, pageDirection?: string | null): Promise<searchFacet | null> => {
+  const searchParameters = new URLSearchParams();
+  if (keword !== undefined && keword !== '' && keword !== null) {
+    searchParameters.append('search', keword);
+  }
+  if (providerName !== undefined && providerName !== '' && providerName !== null) {
+    searchParameters.append('providerName', providerName);
+  }
+  if (pageToken !== undefined && pageToken !== '' && pageToken !== null) {
+    searchParameters.append('paginationToken', pageToken);
+  }
+  if (pageDirection !== undefined && pageDirection !== '' && pageDirection !== null) {
+    searchParameters.append('paginationDirection', pageDirection);
+  }
+  const response: ApiResponse | null = await makeRequest(
+       HttpMethods.GET,
+            `/products/productsSearcFacet?${searchParameters.toString()}`
+  );
+  //console.log(`response fetchSearchProducts(${providerName}, ${keword}): `,response);
+  if (response.error && response.error.message &&  0 < response.error.message.length) {
+    console.log(response.error.message ?? 'Error desconocido al obtener la lista de productos.');
+    return null;
+  } else {
+    return  response.data;
   }
 }
 
