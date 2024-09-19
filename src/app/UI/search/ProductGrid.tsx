@@ -29,8 +29,7 @@ const ProductGrid = async({ searchParams }: {
   }
   let pageTokenAfter =  '';
   let pageTokenBefore = '';
-  const { searchProducts: products, count, ProviderNameList } = results as searchFacet;
-  console.log(ProviderNameList);
+  const { searchProducts: products = [], count, ProviderNameList } = results as searchFacet;
   if (products !== null) {
     if (products.length > 0) {
       pageTokenAfter = products[products.length - 1].paginationToken;

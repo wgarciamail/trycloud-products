@@ -1,11 +1,13 @@
 "use client";
 
-import { useState } from 'react'
+import {  useState } from 'react'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
 import { Badge } from "@/components/ui/badge"
 import { X } from "lucide-react"
+import { useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 
 type Filter = {
   id: string;
@@ -29,24 +31,71 @@ const filters_old: Filter[] = [
   { id: "rating-2-plus", category: "Calificación", label: "2★ y más" },
 ]
 
-export default function Component({brandList = [], categoryList}: {brandList: any[], categoryList: string[]}) {
-  const [selectedFilters, setSelectedFilters] = useState<string[]>([])
 
+
+export default function Component({brandList = [], categoryList}: {brandList: any[], categoryList: string[]}) {
+  const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  /* LLena los filtros de marca */
   const filters: Filter[] = [];
-  brandList.forEach(brand => {
-    filters.push({id: `brand-${brand._id}`, category: "Marca", label: `${brand._id} (${brand.count})`})
-  });
+  if (brandList){
+    const filtersBrand = brandList.map(brand => ({
+      id: brand._id,
+      category: "Marca",
+      label: `${brand._id} (${brand.count})`
+    }))
+    filters.push(...filtersBrand);
+  }
+  /** Llena los filtros de categoría */
+  if (categoryList){
+    const filtersCategory = categoryList.map(category => ({
+      id: category,
+      category: "Categoría",
+      label: category
+    }))
+    filters.push(...filtersCategory)
+  }
+
+  const applyFilters = (newFilters: string[]) => {
+    const filtersToApply = filters.filter(filter => newFilters.includes(filter.id))
+    const filterBrand = filtersToApply.filter(filter => filter.category === "Marca");
+    /* const filterCategory = filtersToApply.filter(filter => filter.category === "Categoría");
+    console.log(filterCategory); */
+    let param = null;
+    if (filterBrand.length > 0){
+      param = `?providerName=${filterBrand.map(filter => filter.id).join('|')}`;
+    }
+    const keword = searchParams.get('keword');
+    if (keword) {
+      param = param ? `${param}&keword=${keword}` : `?keword=${keword}`;
+    }
+    if (param) {
+      router.push(param);
+    } else {
+      router.push('/dashboard/search');
+    }
+  }
+
 
   const toggleFilter = (filterId: string) => {
-    setSelectedFilters(prev => 
-      prev.includes(filterId) 
-        ? prev.filter(id => id !== filterId)
-        : [...prev, filterId]
-    )
+    const newFilters = () => {
+      if (selectedFilters.includes(filterId)) {
+        return selectedFilters.filter(id => id !== filterId)
+      } 
+      return [...selectedFilters, filterId]
+    }
+    const filterList = newFilters();
+    setSelectedFilters(filterList);
+    applyFilters(filterList);
   }
 
   const removeFilter = (filterId: string) => {
-    setSelectedFilters(prev => prev.filter(id => id !== filterId))
+  
+    const filterList = selectedFilters.filter(id => id !== filterId);
+    setSelectedFilters(filterList);
+    applyFilters(filterList);
   }
 
   return (

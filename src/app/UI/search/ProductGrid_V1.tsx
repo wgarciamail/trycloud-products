@@ -37,7 +37,7 @@ const ProductGrid = async({ searchParams }: {
 
   return (
     <>
-      <ProductFilter />
+      <ProductFilter brandList={[]} categoryList={[]} />
 
       {products === null || products.length === 0 && (
         <div className="h-[50vh] flex justify-center items-center">
