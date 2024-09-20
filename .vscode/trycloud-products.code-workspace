@@ -1,0 +1,12 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		},
+		{
+			"name": "lambda_aws",
+			"path": "../../../lambda_aws"
+		}
+	],
+	"settings": {}
+}

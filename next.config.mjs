@@ -92,7 +92,13 @@ const nextConfig = {
           port: '',
           pathname: '*/**',
         },
-        //
+        {
+          protocol: 'https',
+          hostname: 'trcmnbco.s3.us-east-1.amazonaws.com',
+          port: '',
+          pathname: '*/**',
+        },
+        //(https://trcmnbco.s3.us-east-1.amazonaws.com
       ],
     },
   };

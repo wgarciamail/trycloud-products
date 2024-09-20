@@ -72,6 +72,8 @@ export const fetchSearchFacetProducts = async (providerName?: string | null, kew
   if (pageDirection !== undefined && pageDirection !== '' && pageDirection !== null) {
     searchParameters.append('paginationDirection', pageDirection);
   }
+  //console.log(`url: ${process.env.NEXT_PUBLIC_API_URL}/api/products/productsSearcFacet?${searchParameters.toString()}`);
+
   const response: ApiResponse | null = await makeRequest(
        HttpMethods.GET,
             `/products/productsSearcFacet?${searchParameters.toString()}`
