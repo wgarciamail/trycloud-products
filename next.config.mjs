@@ -98,6 +98,12 @@ const nextConfig = {
           port: '',
           pathname: '*/**',
         },
+        {
+          protocol: 'https',
+          hostname: 'vansco.vteximg.com.br',
+          port: '',
+          pathname: '*/**',
+        },
         //(https://trcmnbco.s3.us-east-1.amazonaws.com
       ],
     },
